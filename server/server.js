@@ -1,8 +1,16 @@
 const express = require("express");
 const redis = require("redis");
+const client = redis.createClient();
 const app = express();
 let redisClient;
 app.use(express.json());
+
+client.on("error", function (error) {
+  console.error("Error: ", error);
+});
+client.on("connect", function (error) {
+  console.log("Redis connection established");
+});
 
 // Redis connection
 (async () => {
